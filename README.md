@@ -16,6 +16,16 @@ The file `must.js` contains the minified library. The file sets up a global vari
 
 This may be customized by changing the opening expression `var must= ...` to whatever, such as `whateverNamespaceOrModule.templateCompiler = ...`.
 
+## Basic use
+
+The library consists of one single function, `must`, which called with a `templateString` returns a compiled template as a function which accepts `templateData` to return a rendered string.
+
+```javascript
+var compiledTemplate = must(templateString);
+
+var renderedString = compiledTemplate(templateData);
+```
+
 ## Documentation and examples
 
 ### Variables and function variables
