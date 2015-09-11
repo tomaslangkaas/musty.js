@@ -3,7 +3,7 @@
 Tiny templating library
 
 ## Features
-* Tiny (~1kb)
+* Tiny (~1kb minified)
 * Fast (compiles templates to reusable functions)
 * Based on mustache syntax
 * No dependencies
@@ -12,7 +12,7 @@ Tiny templating library
 
 ## Setup
 
-The file `must.js` contains the library. The file sets up a global variable `must` which contains the whole library in a self-invoking function expression.
+The file `must.js` contains the minified library. The file sets up a global variable `must` which contains the whole library in a self-invoking function expression.
 
 This may be customized by changing the opening expression `var must= ...` to whatever, such as `whateverNamespaceOrModule.templateCompiler = ...`.
 
