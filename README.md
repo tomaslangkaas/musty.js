@@ -40,3 +40,23 @@ Inspecting `renderedString` in the console:
 ```
 
 Non-existing keys in `templateData`, as the key `"don't "` in this example, are not rendered.
+
+### HTML escaping
+
+...
+
+### Conditional sections
+
+...
+
+### Enumerable sections
+
+...
+
+### Custom formatters
+
+...
+
+### Partials and lambdas
+
+...
