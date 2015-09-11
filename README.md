@@ -16,7 +16,7 @@ Tiny templating library
 
 Standard mustache tags for inserting variables are supported:
 
-```
+```javascript
 var templateString = "My name is {{name}}, my lucky number is {{luckyNumber}}, and I {{don't }}like skating.";
 
 var templateData = {
@@ -33,7 +33,7 @@ Notice that calling `must(templateString)` always returns a function (a compiled
 
 Inspecting `renderedString` in the console:
 
-```
+```javascript
 > renderedString
 "My name is Bart Simpson, my lucky number is 9, and I like skating."
 ```
