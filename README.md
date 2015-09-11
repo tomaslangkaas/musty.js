@@ -13,7 +13,7 @@ Tiny templating library
 
 ## Setup
 
-The file `must.js` contains the minified library. The file sets up a global variable `must` which contains the whole library in a self-invoking function expression.
+The file `must.js` contains the minified library. When loaded, this file sets up a global variable `must` which contains the whole library in a self-invoking function expression.
 
 This may be customized by changing the opening expression `var must= ...` to whatever, such as `whateverNamespaceOrModule.templateCompiler = ...`.
 
