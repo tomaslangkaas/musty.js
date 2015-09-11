@@ -60,7 +60,22 @@ Non-existing keys in `templateData`, as the key `"don't "` in this example, are 
 
 ### HTML escaping
 
-...
+```javascript
+var templateString = "Escaped: {{boldAndBrave}} & unescaped: {{{boldAndBrave}}}";
+
+var templateData = {
+    boldAndBrave: '<b>bold & "brave"</b>'
+};
+
+var renderedString = must(templateString)(templateData);
+```
+
+Inspecting `renderedString` in the console:
+
+```javascript
+> renderedString
+"Escaped: &lt;b&gt;bold &amp; &?;brave&?;&lt;/b&gt; & unescaped: <b>bold & "brave"</b>"
+```
 
 ### Conditional sections
 
