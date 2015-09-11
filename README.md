@@ -6,4 +6,4 @@ Tiny templating library
 * Based on mustache syntax
 * No dependencies
 * Extensive browser support (tested in IE6+)
-* Supports formatters
+* Support for custom formatters
