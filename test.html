@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>must.js tests</title>
+<style>
+body{
+	font-family: sans-serif;
+}
+</style>
+</head>
+<body>
+<div id="testlog"></div>
+<script id="quicktest">
+
+function quicktest(title,tests,onprogress){
+	var pending = tests.length/3,
+	obj = {
+		'title': title,
+		'tests':tests,
+		'results':{},
+		'last':-1,
+		'passed':0,
+		'failed':0,
+		'completed': 0,
+		'pending': pending,
+		'total': pending,
+		'failures': {}
+	};
+	function isFunc(f){return typeof(f) == 'function';}
+	function defer(fn){setTimeout(fn,0);}
+	function run(index){
+		var actual = tests[index+1];
+		if(isFunc(actual)){
+			defer(function(){
+				try{
+					actual(function(testoutput){
+						report(testoutput, index);
+					});
+				}catch(err1){
+					report(err1.message, index);
+				}
+			});
+		}else{
+			defer(function(){
+				report(actual, index);
+			});
+		}
+	}
+	function report(output, index){
+		var expected = tests[index+2], pass;
+		pass = isFunc(expected)? expected(output): (output == expected);
+		if(pass){
+			obj.passed++;
+			obj.results[index] = 1;
+		}else{
+			obj.failed++;
+			obj.failures[index] = output;
+			obj.results[index] = -1;
+		}
+		obj.last = index;
+		obj.pending--;
+		obj.completed++;
+		onprogress(obj);
+		if(obj.pending) run(index+3);
+	}
+	defer(function(){
+		run(0);
+	});
+	onprogress(obj);
+}
+
+var testReporter = (function(prefix){
+	var instanceId = 0;
+	return function(parentID){
+		var id = instanceId++, pre = prefix+id+'_';
+		function elm(n, s){(document.getElementById(n) || {}).innerHTML = s;}
+		return function(obj){
+			if(obj.last<0){//init
+				var s = '<h2>'+obj.title+'</h2><p><span id="'+pre+'c">'+obj.completed+'</span>'+
+				' of '+obj.total+' completed: '+
+				'<span style="color:green" id="'+pre+'p">'+obj.passed+'</span> passed, '+
+				'<span style="color:red" id="'+pre+'f">'+obj.failed+'</span> failed.</p><table>', i, l, t = obj.tests;
+				for(i = 0, l = t.length; i < l; i += 3){
+					s += '<tr><td>'+(i/3+1)+'.</td><td>'+t[i]+'</td><td id="'+pre+i+'"></td></tr>';
+				}
+				elm(parentID, s+'</table>');
+			}else{
+				var i = obj.last, r = obj.results[i];
+				r = r>0? '<span style="color:green">Passed</span>': '<span style="color:red">Failed:</span> '+obj.failures[i];
+				elm(pre+i, r);
+				elm(pre+'c', obj.completed);
+				elm(pre+'p', obj.passed);
+				elm(pre+'f', obj.failed);
+			}		
+		}
+	}
+})('testReporter');
+</script><script>
+
+var must=function(){function b(a,d){return function(c){return(""+c).replace(a,d)}}function h(a){var d,c=typeof a;if("object"==c){for(d in a)return[1,a.length||0];return[]}return a||"number"==c&&!isNaN(a)?[]:[0,1]}function g(a){return"\\x"+("0"+a.charCodeAt(0).toString(16)).slice(-2)}function e(a){a=a.split("@");for(var d=a.length;d--;)a[d]='"'+k(a[d])+'"';return"g(d,["+a+"])"}var l=b(/[\"\/\\<>&\']/g,function(a){return"&#"+a.charCodeAt(0)+";"}),k=b(/[\x00-\x1f\"\/\\]/g,g),m=b(/\{\{\{((?:\}{0,2}[^\}])*)\}\}\}|\{\{([#\/\^]?)((?:\}?[^\}])*)\}\}|([\b\f\n\r\t\"\/\\])/g,function(a,d,c,f,b){return"/"==c?'"}return s})(d)+"':c?'"+(function(d){var k='+e(f)+',s="",i,p=t(k);'+("#"==c?"for(i=0;i<p[1];i++){if(p[0])d=k[i];":"if(!p[1]){")+'s+="':d?'"+'+e(d)+'+"':f?'"+h('+e(f)+')+"':b?g(b):""});return function(a,d){function c(a,c){var b=c[0],b=a&&a.hasOwnProperty(b)?"function"==typeof a[b]?a[b]():a[b]:"."==b?a:"";d&&d[c[1]]&&d[c[1]].apply(null,c.splice(0,2,b));return b}try{var b=new Function("d","g","h","t",'return "'+m(a)+'"');return function(a){return b(a,c,l,h)}}catch(e){return!1}}}();
+
+quicktest('must.js tests',[
+
+	//Test 1
+	
+	'Variables and function variables',
+	function(done){
+		var templateString = "My name is {{name}}, my lucky number is " +
+			"{{luckyNumber}}, and I {{don't }}like skating.";
+
+		var templateData = {
+			name: "Bart Simpson",
+			luckyNumber: function(){
+				return 10 * Math.random() | 0
+			} 
+		};
+
+		var renderedString = must(templateString)(templateData);
+
+		done(renderedString);
+	},
+	function(output){
+		return /^My name is Bart Simpson, my lucky number is \d, and I like skating\.$/.test(output);
+	},
+	
+	//Test 2
+	
+	'HTML escaping',
+	function(done){
+		var templateString = "Escaped: {{boldAndBrave}} & unescaped: {{{boldAndBrave}}}";
+
+		var templateData = {
+			boldAndBrave: '<b>bold & "brave"</b>'
+		};
+
+		var renderedString = must(templateString)(templateData);
+
+		done(renderedString);
+	},
+	'Escaped: &#60;b&#62;bold &#38; &#34;brave&#34;&#60;&#47;b&#62; & unescaped: <b>bold & "brave"</b>',
+
+],testReporter('testlog')
+);
+
+</script></body></html>
