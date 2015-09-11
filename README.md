@@ -17,7 +17,8 @@ Tiny templating library
 Standard mustache tags for inserting variables are supported:
 
 ```javascript
-var templateString = "My name is {{name}}, my lucky number is {{luckyNumber}}, and I {{don't }}like skating.";
+var templateString = "My name is {{name}}, my lucky number is " +
+    "{{luckyNumber}}, and I {{don't }}like skating.";
 
 var templateData = {
     name: "Bart Simpson",
