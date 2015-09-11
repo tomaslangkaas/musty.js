@@ -74,9 +74,9 @@ var renderedString = must(templateString)(templateData);
 
 Inspecting `renderedString` in the console:
 
-```javascript
+```
 > renderedString
-"Escaped: &lt;b&gt;bold &amp; &?;brave&?;&lt;/b&gt; & unescaped: <b>bold & "brave"</b>"
+"Escaped: &#60;b&#62;bold &#38; &#34;brave&#34;&#60;&#47;b&#62; & unescaped: <b>bold & "brave"</b>"
 ```
 
 ### Conditional sections
