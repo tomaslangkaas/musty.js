@@ -10,6 +10,12 @@ Tiny templating library
 * Extensive browser support (tested in IE6+)
 * Support for custom formatters
 
+## Setup
+
+The file `must.js` contains the library. The file sets up a global variable `must` which contains the whole library in a self-invoking function expression.
+
+This may be customized by changing the opening expression `var must= ...` to whatever, such as `whateverNamespaceOrModule.templateCompiler = ...`.
+
 ## Documentation and examples
 
 ### Variables and function variables
