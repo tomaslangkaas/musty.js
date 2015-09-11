@@ -3,6 +3,7 @@
 Tiny templating library
 
 ## Features
+
 * Tiny (~1kb minified)
 * Fast (compiles templates to reusable functions)
 * Based on mustache syntax
@@ -18,7 +19,7 @@ This may be customized by changing the opening expression `var must= ...` to wha
 
 ## Basic use
 
-The library consists of one single function, `must`. Calling this with a string with template syntax returns a compiled template or `false` if compilation fails. The compiled template is a function which accepts an object with data to insert in the template and returns a rendered string.
+The library consists of one single function, `must`. Calling this with a string with template syntax returns a compiled template or `false` if compilation fails. The compiled template is a function which accepts an object with data and returns a rendered string.
 
 ```javascript
 var compiledTemplate = must(templateString);
