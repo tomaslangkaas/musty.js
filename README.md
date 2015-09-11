@@ -60,6 +60,8 @@ Non-existing keys in `templateData`, as the key `"don't "` in this example, are 
 
 ### HTML escaping
 
+By default, all inserted data is sanitized for HTML by escaping the characters `<`, `>`, `&`, `"`, and `'`. For raw output (at own risk), use triple braces: 
+
 ```javascript
 var templateString = "Escaped: {{boldAndBrave}} & unescaped: {{{boldAndBrave}}}";
 
