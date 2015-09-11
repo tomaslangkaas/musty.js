@@ -113,7 +113,7 @@ Console:
 Inverted conditional sections start with a tag with the `^` character, and end with a tag with a `/` character. Content within the section is only rendered if the section key is falsy:
 
 ```javascript
-var templateString = "{{#showAndTell}}This is only shown if showAndTell is falsy.{{/showAndTell}}";
+var templateString = "{{^showAndTell}}This is only shown if showAndTell is falsy.{{/showAndTell}}";
 
 var templateData1 = {
     showAndTell: true;
