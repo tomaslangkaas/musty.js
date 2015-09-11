@@ -18,13 +18,15 @@ This may be customized by changing the opening expression `var must= ...` to wha
 
 ## Basic use
 
-The library consists of one single function, `must`, which called with a `templateString` returns a compiled template as a function which accepts `templateData` to return a rendered string.
+The library consists of one single function, `must`. Calling this with a `templateString` returns a compiled template. This is a function which accepts a `templateData` object and returns a rendered string.
 
 ```javascript
 var compiledTemplate = must(templateString);
 
 var renderedString = compiledTemplate(templateData);
 ```
+
+For custom formatters, the `must` function accepts a second, optional argument, a `customFormatters` object with formatting functions.
 
 ## Documentation and examples
 
