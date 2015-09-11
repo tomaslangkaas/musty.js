@@ -26,7 +26,7 @@ var compiledTemplate = must(templateString);
 var renderedString = compiledTemplate(templateData);
 ```
 
-For custom formatters, the `must` function accepts a second, optional argument, a `customFormatters` object with formatting functions.
+For custom formatters, the `must` function accepts a second, optional argument, an object with formatting functions.
 
 ## Documentation and examples
 
