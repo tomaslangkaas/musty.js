@@ -87,11 +87,11 @@ Conditional sections start with a tag with the `#` character, and end with a tag
 var templateString = "{{#showAndTell}}This is only shown if showAndTell is truthy.{{/showAndTell}}";
 
 var templateData1 = {
-    showAndTell: true;
+    showAndTell: true
 };
 
 var templateData2 = {
-    showAndTell: false;
+    showAndTell: false
 };
 
 var renderedString1 = must(templateString)(templateData1);
@@ -116,11 +116,11 @@ Inverted conditional sections start with a tag with the `^` character, and end w
 var templateString = "{{^showAndTell}}This is only shown if showAndTell is falsy.{{/showAndTell}}";
 
 var templateData1 = {
-    showAndTell: true;
+    showAndTell: true
 };
 
 var templateData2 = {
-    showAndTell: false;
+    showAndTell: false
 };
 
 var renderedString1 = must(templateString)(templateData1);
