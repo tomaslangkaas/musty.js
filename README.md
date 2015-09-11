@@ -48,8 +48,6 @@ var templateData = {
 var renderedString = must(templateString)(templateData);
 ```
 
-Notice that calling `must(templateString)` always returns a function (a compiled template) which may be cached for reuse. In this example, the compiled template is immediately called with `templateData` to provide a rendered string.
-
 Inspecting `renderedString` in the console:
 
 ```javascript
