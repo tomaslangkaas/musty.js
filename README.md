@@ -81,6 +81,33 @@ Inspecting `renderedString` in the console:
 
 ### Conditional sections
 
+Conditional sections start with a tag with a pound character, `#`, and end with a tag with a slash character, `/`. Content within the section is only rendered if the section key is truthy:
+
+```javascript
+var templateString = "{{#showAndTell}}This is only shown if showAndTell is truthy.{{/showAndTell}}";
+
+var templateData1 = {
+    showAndTell: true;
+};
+
+var templateData2 = {
+    showAndTell: false;
+};
+
+var renderedString1 = must(templateString)(templateData1);
+
+var renderedString2 = must(templateString)(templateData2);
+```
+
+Console:
+
+```javascript
+> renderedString2
+""
+> renderedString1
+"This is only shown if showAndTell is truthy."
+```
+
 ...
 
 ### Enumerable sections
