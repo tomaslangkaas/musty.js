@@ -96,9 +96,11 @@ var testReporter = (function(prefix){
 		}
 	}
 })('testReporter');
-</script><script>
+</script>
+<script src="must.js"></script>
+<script>
 
-var must=function(){function b(a,d){return function(c){return(""+c).replace(a,d)}}function h(a){var d,c=typeof a;if("object"==c){for(d in a)return[1,a.length||0];return[]}return a||"number"==c&&!isNaN(a)?[0,1]:[]}function g(a){return"\\x"+("0"+a.charCodeAt(0).toString(16)).slice(-2)}function e(a){a=a.split("@");for(var d=a.length;d--;)a[d]='"'+k(a[d])+'"';return"g(d,["+a+"])"}var l=b(/[\"\/\\<>&\']/g,function(a){return"&#"+a.charCodeAt(0)+";"}),k=b(/[\x00-\x1f\"\/\\]/g,g),m=b(/\{\{\{((?:\}{0,2}[^\}])*)\}\}\}|\{\{([#\/\^]?)((?:\}?[^\}])*)\}\}|([\b\f\n\r\t\"\/\\])/g,function(a,d,c,f,b){return"/"==c?'"}return s})(d)+"':c?'"+(function(d){var k='+e(f)+',s="",i,p=t(k);'+("#"==c?"for(i=0;i<p[1];i++){if(p[0])d=k[i];":"if(!p[1]){")+'s+="':d?'"+'+e(d)+'+"':f?'"+h('+e(f)+')+"':b?g(b):""});return function(a,d){function c(a,c){var b=c[0],b=a&&a.hasOwnProperty(b)?"function"==typeof a[b]?a[b]():a[b]:"."==b?a:"";d&&d[c[1]]&&d[c[1]].apply(null,c.splice(0,2,b));return b}try{var b=new Function("d","g","h","t",'return "'+m(a)+'"');return function(a){return b(a,c,l,h)}}catch(e){return!1}}}();
+//var must=function(){function b(a,d){return function(c){return(""+c).replace(a,d)}}function h(a){var d,c=typeof a;if("object"==c){for(d in a)return[1,a.length||0];return[]}return a||"number"==c&&!isNaN(a)?[0,1]:[]}function g(a){return"\\x"+("0"+a.charCodeAt(0).toString(16)).slice(-2)}function e(a){a=a.split("@");for(var d=a.length;d--;)a[d]='"'+k(a[d])+'"';return"g(d,["+a+"])"}var l=b(/[\"\/\\<>&\']/g,function(a){return"&#"+a.charCodeAt(0)+";"}),k=b(/[\x00-\x1f\"\/\\]/g,g),m=b(/\{\{\{((?:\}{0,2}[^\}])*)\}\}\}|\{\{([#\/\^]?)((?:\}?[^\}])*)\}\}|([\b\f\n\r\t\"\/\\])/g,function(a,d,c,f,b){return"/"==c?'"}return s})(d)+"':c?'"+(function(d){var k='+e(f)+',s="",i,p=t(k);'+("#"==c?"for(i=0;i<p[1];i++){if(p[0])d=k[i];":"if(!p[1]){")+'s+="':d?'"+'+e(d)+'+"':f?'"+h('+e(f)+')+"':b?g(b):""});return function(a,d){function c(a,c){var b=c[0],b=a&&a.hasOwnProperty(b)?"function"==typeof a[b]?a[b]():a[b]:"."==b?a:"";d&&d[c[1]]&&d[c[1]].apply(null,c.splice(0,2,b));return b}try{var b=new Function("d","g","h","t",'return "'+m(a)+'"');return function(a){return b(a,c,l,h)}}catch(e){return!1}}}();
 
 quicktest('must.js tests',[
 
@@ -188,7 +190,61 @@ quicktest('must.js tests',[
 	function(output){
 		return output[1] == "This is only shown if showAndTell is falsy." &&
 			output[0] == ""
-	}
+	},
+	
+	//Test 5
+	
+	'Truthy and falsy conditions',
+	function(done){
+		var templateString = "{{#valueList}}" +
+			"{{#value}}Truthy{{/value}}"+
+			"{{^value}}Falsy{{/value}}: "+
+			"{{{valueType}}} \n"+
+		"{{/valueList}}";
+
+		var templateData = {
+			valueList:[
+				
+				//Falsy values
+				{valueType: '[]', value: []},
+				{valueType: '{}', value: {}},
+				{valueType: '""', value: ""},
+				{valueType: 'false', value: false},
+				{valueType: 'null', value: null},
+				{valueType: 'undefined', value: undefined},
+				{valueType: 'Number.NaN', value: Number.NaN},
+				{valueType: 'function(){return false}', value: function(){return false}},
+				
+				//Truthy values
+				{valueType: 'true', value: true},
+				{valueType: 'function(){return 1}', value: function(){return 1}},
+				{valueType: '0', value: 0},
+				{valueType: '"0"', value: "0"},
+				{valueType: '"string"', value: "string"},
+				{valueType: '{key: "value"}', value: {key: "value"}},
+				{valueType: 'Infinity', value: Infinity}
+			]
+		};
+
+		var renderedString = must(templateString)(templateData);
+		
+		done(renderedString);
+	},
+	'Falsy: [] \n'+
+	'Falsy: {} \n'+
+	'Falsy: "" \n'+
+	'Falsy: false \n'+
+	'Falsy: null \n'+
+	'Falsy: undefined \n'+
+	'Falsy: Number.NaN \n'+
+	'Falsy: function(){return false} \n'+
+	'Truthy: true \n'+
+	'Truthy: function(){return 1} \n'+
+	'Truthy: 0 \n'+
+	'Truthy: "0" \n'+
+	'Truthy: "string" \n'+
+	'Truthy: {key: "value"} \n'+
+	'Truthy: Infinity \n'
 
 ],testReporter('testlog')
 );
