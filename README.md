@@ -4,12 +4,13 @@ Tiny templating library
 
 ## Features
 
+* Based on [mustache](http://mustache.github.io/mustache.5.html) syntax
 * Tiny (~1kb minified)
 * Fast (compiles templates to reusable functions)
-* Based on mustache syntax
 * No dependencies
-* Extensive browser support (tested in IE6+)
-* Support for custom formatters
+* Extensive browser and runtime support (tested in IE6+)
+* Supports custom functions
+* MIT-licensed
 
 ## Setup
 
