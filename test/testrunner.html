@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>must.js tests</title>
+<style>
+body{
+	font-family: sans-serif;
+}
+</style>
+</head>
+<body>
+<div id="testlog"></div>
+<script src="quicktest.js"></script>
+<script src="tests.js"></script>
+<script src="../must.js"></script>
+<script>
+quicktest('must.js', tests, testReporter('testlog'));
+</script></body></html>
