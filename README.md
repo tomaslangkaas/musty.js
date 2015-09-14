@@ -210,4 +210,4 @@ Truthy: Infinity
 
 ## Testing
 
-The file `test.html` contain client-side tests, [run the tests online](http://htmlpreview.github.io/?https://github.com/tomaslangkaas/must.js/blob/master/test.html)
+The file `test.html` contain client-side tests, [run the tests online](http://htmlpreview.github.io/?https://github.com/tomaslangkaas/must.js/blob/master/test/testrunner.html)
