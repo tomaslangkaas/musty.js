@@ -12,6 +12,12 @@ Tiny templating library for javascript based on [mustache](http://mustache.githu
 * Supports custom functions
 * MIT-licensed
 
+## Source code
+
+Get the [production code](https://raw.githubusercontent.com/tomaslangkaas/must.js/master/must.js), 
+the [development code](https://raw.githubusercontent.com/tomaslangkaas/must.js/master/src/must.dev.js), 
+or read the [annotated source code](http://www.explainjs.com/explain?src=https%3A%2F%2Fraw.githubusercontent.com%2Ftomaslangkaas%2Fmust.js%2Fmaster%2Fsrc%2Fmust.dev.js)
+
 ## Setup
 
 The file `must.js` contains the minified library. When loaded, this file sets up a global variable `must` which contains the whole library in a self-invoking function expression.
