@@ -8,7 +8,7 @@ Tiny templating library for javascript
 * Tiny (~1kb minified)
 * Fast (compiles templates to reusable functions)
 * No dependencies
-* ECMAscript 3 compliant -- extensive browser and runtime support
+* ECMAscript 3 compliant
 * Supports custom functions
 * MIT-licensed
 
