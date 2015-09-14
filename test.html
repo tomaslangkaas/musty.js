@@ -244,7 +244,122 @@ quicktest('must.js tests',[
 	'Truthy: "0" \n'+
 	'Truthy: "string" \n'+
 	'Truthy: {key: "value"} \n'+
-	'Truthy: Infinity \n'
+	'Truthy: Infinity \n',
+
+	//Test 6
+	
+	'Enumerable sections',
+	function(done){
+		var templateString = '<ul>'+
+			'{{#list}}'+
+				'<li>{{item}}</li>'+
+			'{{/list}}</ul>';
+
+		var templateData = {
+			list: [
+				{item: 'red'},
+				{item: 'green'},
+				{item: 'blue'}
+			]
+		};
+			
+		var renderedString = must(templateString)(templateData);
+		
+		done(renderedString);
+	},
+	'<ul><li>red</li><li>green</li><li>blue</li></ul>',
+	
+	'Dot syntax',
+	function(done){
+		var templateString = '<ul>'+
+			'{{#list}}'+
+				'<li>{{.}}</li>'+
+			'{{/list}}</ul>';
+
+		var templateData = {
+			list: ['red', 'green', 'blue']
+		};
+			
+		var renderedString = must(templateString)(templateData);
+		
+		done(renderedString);
+	},
+	'<ul><li>red</li><li>green</li><li>blue</li></ul>',
+	
+	'Dot syntax 2',
+	function(done){
+		var templateString = '<ul>'+
+			'{{#.}}'+
+				'<li>{{.}}</li>'+
+			'{{/.}}</ul>';
+
+		var templateData = ['red', 'green', 'blue'];
+			
+		var renderedString = must(templateString)(templateData);
+		
+		done(renderedString);
+	},
+	'<ul><li>red</li><li>green</li><li>blue</li></ul>',
+	
+	'Custom functions',
+	function(done){
+		var templateString = 'The color {{color@upper}} is {{color@rgb}} in rgb. '+
+		'The number pi is about {{pi@fixed@2}}.';
+
+		var templateData = {
+			color: '#c9d2a5',
+			pi: 3.141592653589793
+		};
+		
+		var functions = {
+			upper: function(str){
+				return ('' + str).toUpperCase();
+			},
+			rgb: function(hex){
+				return [
+					+ ('0x' + hex.slice(1,3)),
+					+ ('0x' + hex.slice(3,5)),
+					+ ('0x' + hex.slice(5,7))
+				].join(', ')
+			},
+			fixed: function(num, digits){
+				//NOTE: parameters are passed as strings
+				return (+num).toFixed(+digits);
+			}
+		}
+			
+		var renderedString = must(templateString, functions)(templateData);
+	
+		done(renderedString);
+	},
+	'The color #C9D2A5 is 201, 210, 165 in rgb. The number pi is about 3.14.',
+	
+	'Partials and lambdas',
+	function(done){
+		var templateString = '{{#users}}'+
+			'{{{.@userTemplate}}} '+
+		'{{/users}}';
+		
+		var userTemplateString = '<b>{{name}}</b>';
+		
+		var functions = {
+			userTemplate: must(userTemplateString)
+		}
+		
+		var templateData = {
+			users: [
+				{name: 'Jane'},
+				{name: 'Bob '},
+				{name: 'John'}
+			]
+		};
+			
+		var renderedString = must(templateString, functions)(templateData);
+	
+		done(renderedString);
+	},
+	'<b>Jane</b> <b>Bob </b> <b>John</b> '
+
 
 ],testReporter('testlog')
 );
