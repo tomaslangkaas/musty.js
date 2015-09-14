@@ -2,6 +2,8 @@
 
 Tiny templating library for javascript
 
+<small>Small text</small>
+
 ## Features
 
 * Based on [mustache](http://mustache.github.io/mustache.5.html) syntax
