@@ -2,18 +2,13 @@
 
 Tiny templating library for javascript
 
-| Template | Data | Output |
-|---|---|---|
-|a|b|c|
-
 ## Features
 
 * Based on [mustache](http://mustache.github.io/mustache.5.html) syntax
 * Tiny (~1kb minified)
 * Fast (compiles templates to reusable functions)
 * No dependencies
-* ECMAscript 3 compliant
-* Extensive browser and runtime support
+* ECMAscript 3 compliant -- extensive browser and runtime support
 * Supports custom functions
 * MIT-licensed
 
