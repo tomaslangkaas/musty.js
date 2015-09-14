@@ -1,6 +1,6 @@
 # must.js
 
-Tiny templating library
+Tiny templating library for javascript
 
 ## Features
 
@@ -8,7 +8,8 @@ Tiny templating library
 * Tiny (~1kb minified)
 * Fast (compiles templates to reusable functions)
 * No dependencies
-* Extensive browser and runtime support (tested in IE6+)
+* ECMAscript 3 compliant
+* Extensive browser and runtime support
 * Supports custom functions
 * MIT-licensed
 
@@ -50,7 +51,7 @@ var templateData = {
 var renderedString = must(templateString)(templateData);
 ```
 
-Inspecting `renderedString` in the console:
+Console:
 
 ```javascript
 > renderedString
@@ -73,11 +74,11 @@ var templateData = {
 var renderedString = must(templateString)(templateData);
 ```
 
-Inspecting `renderedString` in the console:
+Console:
 
-```
+```javascript
 > renderedString
-"Escaped: &#60;b&#62;bold &#38; &#34;brave&#34;&#60;&#47;b&#62; & unescaped: <b>bold & "brave"</b>"
+'Escaped: &#60;b&#62;bold &#38; &#34;brave&#34;&#60;&#47;b&#62; & unescaped: <b>bold & "brave"</b>'
 ```
 
 ### Conditional sections
@@ -136,6 +137,64 @@ Console:
 "This is only shown if showAndTell is falsy."
 > renderedString1
 ""
+```
+
+### Truthy and falsy
+
+```javascript
+var templateString = "{{#valueList}}" +
+			"{{#value}}Truthy{{/value}}"+
+			"{{^value}}Falsy{{/value}}: "+
+			"{{{valueType}}} \n"+
+		"{{/valueList}}";
+
+var templateData = {
+	valueList:[
+		
+		//Falsy values
+		{valueType: '[]', value: []},
+		{valueType: '{}', value: {}},
+		{valueType: '""', value: ""},
+		{valueType: 'false', value: false},
+		{valueType: 'null', value: null},
+		{valueType: 'undefined', value: undefined},
+		{valueType: 'Number.NaN', value: Number.NaN},
+		{valueType: 'function(){return false}', value: function(){return false}},
+		
+		//Truthy values
+		{valueType: 'true', value: true},
+		{valueType: 'function(){return 1}', value: function(){return 1}},
+		{valueType: '0', value: 0},
+		{valueType: '"0"', value: "0"},
+		{valueType: '"string"', value: "string"},
+		{valueType: '{key: "value"}', value: {key: "value"}},
+		{valueType: 'Infinity', value: Infinity}
+	]
+};
+
+var renderedString = must(templateString)(templateData);
+	
+console.log(renderedString);
+```
+	
+	Console:
+	
+```
+Falsy: [] 
+Falsy: {} 
+Falsy: "" 
+Falsy: false 
+Falsy: null 
+Falsy: undefined 
+Falsy: Number.NaN 
+Falsy: function(){return false} 
+Truthy: true 
+Truthy: function(){return 1} 
+Truthy: 0 
+Truthy: "0" 
+Truthy: "string" 
+Truthy: {key: "value"} 
+Truthy: Infinity 
 ```
 
 ### Enumerable sections
