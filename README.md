@@ -31,7 +31,7 @@ var renderedString = compiledTemplate(templateData);
 
 For custom formatters, the `must` function accepts a second, optional argument, an object with formatting functions.
 
-## Documentation and examples
+## Documentation with code examples
 
 ### Variables and function variables
 
@@ -177,7 +177,7 @@ var renderedString = must(templateString)(templateData);
 console.log(renderedString);
 ```
 	
-	Console:
+Console:
 	
 ```
 Falsy: [] 
