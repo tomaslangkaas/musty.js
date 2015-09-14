@@ -5,10 +5,10 @@ Tiny templating library for javascript based on [mustache](http://mustache.githu
 ## Features
 
 * Based on [mustache](http://mustache.github.io/mustache.5.html) syntax
-* Tiny (~1kb minified)
+* Tiny (~1.1kb minified)
 * Fast (compiles templates to reusable functions)
 * No dependencies
-* ECMAscript 3 compliant
+* ECMAscript 3 compliant (tested in IE6+, FF4+, Chrome)
 * Supports custom functions
 * MIT-licensed
 
@@ -207,3 +207,7 @@ Truthy: Infinity
 ### Partials and lambdas
 
 ...
+
+## Testing
+
+The file `test.html` contain client-side tests, [run the tests online](http://htmlpreview.github.io/?https://github.com/tomaslangkaas/must.js/blob/master/test.html)
