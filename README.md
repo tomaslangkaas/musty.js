@@ -8,7 +8,7 @@ Tiny templating library for javascript based on [mustache](http://mustache.githu
 * Tiny (~1.1kb minified)
 * Fast (compiles templates to reusable functions)
 * No dependencies
-* ECMAscript 3 compliant (tested in IE6+, FF4+, Chrome)
+* ECMAscript 3 compliant (tested in IE6+, FF4+, Safari5+, Chrome)
 * Supports custom functions
 * MIT-licensed
 
