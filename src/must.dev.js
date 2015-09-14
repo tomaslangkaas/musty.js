@@ -12,8 +12,8 @@ var must = (function(){
 
 	//Function to test the key in conditional sections.
 	//Returns 2 parameters in an array:
-	//* isNonEmptyList: value indicating whether this is an enumerable section
-	//* iterationCount: number of times to repeat the section body
+	//- isNonEmptyList: value indicating whether this is an enumerable section
+	//- iterationCount: number of times to repeat the section body
 	function truthyLoop(obj){
 		var i, t = typeof(obj);
 		//If array or object and not null
