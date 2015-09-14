@@ -1,6 +1,6 @@
 # must.js
 
-Tiny templating library for javascript
+Tiny templating library for javascript based on [mustache](http://mustache.github.io/mustache.5.html) syntax
 
 ## Features
 
