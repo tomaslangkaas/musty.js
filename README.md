@@ -2,7 +2,9 @@
 
 Tiny templating library for javascript
 
-| a | b | c |
+| Template | Data | Output |
+|---|---|---|
+|a|b|c|
 
 ## Features
 
