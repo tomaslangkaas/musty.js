@@ -91,14 +91,14 @@ var musty = (function(){
 						//get the value of the current key
 						'var k='+datacall(escapedKey)+
 						//create a string buffer and an iterator variable
-						',s="",i,'+
+						',s="",i,c=d,'+
 						//call truthyLoop to get parameters:
 						//1: is it a non-empty array?
 						//2: how many times to iterate the section body?
 						'p=t(k);'+
 						((sectionToken == '#')?
 							//if conditional section, setup a for loop
-							'for(i=0;i<p[1];i++){if(p[0])d=([k[i]]).concat(d);':
+							'for(i=0;i<p[1];i++){if(p[0])d=[k[i]].concat(c);':
 							//if inverted conditional section, test if iteration count is 0
 							'if(!p[1]){'
 						)+
