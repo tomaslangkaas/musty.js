@@ -122,7 +122,7 @@ var tests = [
 		};
 
 		var renderedString = musty(templateString)(templateData);
-//console.log(renderedString);		
+		
 		done(renderedString);
 	},
 	'Falsy: [] \n'+
@@ -159,10 +159,12 @@ var tests = [
 		};
 			
 		var renderedString = musty(templateString)(templateData);
-//console.log(renderedString);		
+	
 		done(renderedString);
 	},
 	'<ul><li>red</li><li>green</li><li>blue</li></ul>',
+	
+	//Test 7
 	
 	'Dot syntax',
 	function(done){
@@ -176,10 +178,12 @@ var tests = [
 		};
 			
 		var renderedString = musty(templateString)(templateData);
-//console.log(renderedString);		
+		
 		done(renderedString);
 	},
 	'<ul><li>red</li><li>green</li><li>blue</li></ul>',
+	
+	//Test 8
 	
 	'Dot syntax 2',
 	function(done){
@@ -195,6 +199,8 @@ var tests = [
 		done(renderedString);
 	},
 	'<ul><li>red</li><li>green</li><li>blue</li></ul>',
+	
+	//Test 9
 	
 	'Custom functions',
 	function(done){
@@ -224,12 +230,14 @@ var tests = [
 		}
 			
 		var renderedString = musty(templateString, functions)(templateData);
-//console.log(renderedString);	
+
 		done(renderedString);
 	},
 	'The color #C9D2A5 is 201, 210, 165 in rgb. The number pi is about 3.14.',
 	
-	'Partials and lambdas',
+	//Test 10
+	
+	'Custom function as partial',
 	function(done){
 		var templateString = '{{#users}}'+
 			'{{{.@userTemplate}}} '+
@@ -250,9 +258,33 @@ var tests = [
 		};
 			
 		var renderedString = musty(templateString, functions)(templateData);
-//console.log(renderedString);	
+	
 		done(renderedString);
 	},
-	'<b>Jane</b> <b>Bob </b> <b>John</b> '
+	'<b>Jane</b> <b>Bob </b> <b>John</b> ',
+	
+	//Test 11
+	
+	'Search parent contexts',
+	function(done){
+		var templateString = '{{context}}{{name}}{{#list}}{{context}}{{name}}{{#list}}{{context}}{{name}}{{missing}}{{/list}}{{/list}}';
+		
+		var templateData = {
+			context: 1,
+			name: 'a',
+			list: [
+				{
+					context: 2,
+					list: [
+						{name: 'b'}
+					]
+				}
+			]
+		};
+			
+		var renderedString = musty(templateString)(templateData);	
+		done(renderedString);
+	},
+	'1a2a2b'
 
 ];

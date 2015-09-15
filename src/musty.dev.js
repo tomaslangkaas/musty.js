@@ -96,7 +96,7 @@ var musty = (function(){
 				'p=t(k);'+
 				((sectionToken == '#')?
 					//if conditional section, setup a for loop
-					'for(i=0;i<p[1];i++){if(p[0])d=k[i];':
+					'for(i=0;i<p[1];i++){if(p[0])d=([k[i]]).concat(d);':
 					//if inverted conditional section, test if iteration count is 0
 					'if(!p[1]){'
 				)+
@@ -124,30 +124,6 @@ var musty = (function(){
 	//and an optional object with custom functions,
 	//returns a compiled template as a function
 	return function(tmplStr, fnObj){
-		//Function to access data from the current context
-		function getData(data, params){
-			//key is the first parameter, name of any custom function is the second
-			var key = params[0], fn = params[1],
-			//assign value if key exists
-			value = data && data.hasOwnProperty(key)? 
-				typeof data[key] == 'function'?
-					//if function, assign return value
-					data[key]():
-					//else assign value
-					data[key]:
-				//if key does not exist
-				(key == '.'?
-					//if dot, assign current context
-					data:
-					//else, assign empty string
-					'');
-			return (fnObj && fnObj[fn])?
-				//if custom function, replace two first params with value,
-				//call the function with params and return the return value
-				fnObj[fn].apply(null, (params.splice(0, 2, value), params)):
-				//otherwise return the value
-				value;
-		}
 		/* return template processor */
 		//use try/catch to detect compilation failure
 		try{
@@ -157,8 +133,41 @@ var musty = (function(){
 			//the compiled template,
 			//assigned to the variables `g`, `h` and `t`,
 			//and return the compiled template function
-			return function(dataObj){
-				return fn(dataObj, getData, htmlSafe, truthyLoop);
+			return function(dataObj, fnObj2, contextChain){
+				//Function to access data from the current context
+				function getData(contextChain, params){
+					//key is the first parameter, name of any custom function is the second
+					var key = params[0],
+						fn = (fnObj2 && fnObj2[params[1]]) || (fnObj && fnObj[params[1]]), 
+						value, data, i, 
+						l = contextChain.length;
+					for(i = 0; i < l; i++){
+						if(contextChain[i].hasOwnProperty(key)){
+							break;
+						}
+					}
+					data = contextChain[i];
+					//assign value if key exists
+					value = i < l? 
+						typeof data[key] == 'function'?
+							//if function, assign return value
+							data[key]():
+							//else assign value
+							data[key]:
+						//if key does not exist
+						(key == '.'?
+							//if dot, assign current context
+							contextChain[0]:
+							//else, assign empty string
+							'');
+					return fn?
+						//if custom function, replace two first params with value,
+						//call the function with params and return the return value
+						fn.apply(null, (params.splice(0, 2, value), params)):
+						//otherwise return the value
+						value;
+				}
+				return fn(contextChain || [dataObj], getData, htmlSafe, truthyLoop);
 			}
 		}catch(e){
 			//return false if compilation fails

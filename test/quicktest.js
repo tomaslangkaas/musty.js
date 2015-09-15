@@ -25,7 +25,6 @@ function quicktest(title,tests,onprogress){
 						//});
 					});
 				}catch(err1){
-					alert('err');
 					report(err1.message, index);
 				}
 			});
