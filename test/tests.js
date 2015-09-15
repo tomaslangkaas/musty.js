@@ -13,7 +13,7 @@ var tests = [
 			} 
 		};
 
-		var renderedString = must(templateString)(templateData);
+		var renderedString = musty(templateString)(templateData);
 
 		done(renderedString);
 	},
@@ -31,7 +31,7 @@ var tests = [
 			boldAndBrave: '<b>bold & "brave"</b>'
 		};
 
-		var renderedString = must(templateString)(templateData);
+		var renderedString = musty(templateString)(templateData);
 
 		done(renderedString);
 	},
@@ -51,9 +51,9 @@ var tests = [
 			showAndTell: false
 		};
 
-		var renderedString1 = must(templateString)(templateData1);
+		var renderedString1 = musty(templateString)(templateData1);
 
-		var renderedString2 = must(templateString)(templateData2);
+		var renderedString2 = musty(templateString)(templateData2);
 
 		done([renderedString1, renderedString2]);
 	},
@@ -76,9 +76,9 @@ var tests = [
 			showAndTell: false
 		};
 
-		var renderedString1 = must(templateString)(templateData1);
+		var renderedString1 = musty(templateString)(templateData1);
 
-		var renderedString2 = must(templateString)(templateData2);
+		var renderedString2 = musty(templateString)(templateData2);
 
 		done([renderedString1, renderedString2]);
 	},
@@ -121,7 +121,7 @@ var tests = [
 			]
 		};
 
-		var renderedString = must(templateString)(templateData);
+		var renderedString = musty(templateString)(templateData);
 //console.log(renderedString);		
 		done(renderedString);
 	},
@@ -158,7 +158,7 @@ var tests = [
 			]
 		};
 			
-		var renderedString = must(templateString)(templateData);
+		var renderedString = musty(templateString)(templateData);
 //console.log(renderedString);		
 		done(renderedString);
 	},
@@ -175,7 +175,7 @@ var tests = [
 			list: ['red', 'green', 'blue']
 		};
 			
-		var renderedString = must(templateString)(templateData);
+		var renderedString = musty(templateString)(templateData);
 //console.log(renderedString);		
 		done(renderedString);
 	},
@@ -190,7 +190,7 @@ var tests = [
 
 		var templateData = ['red', 'green', 'blue'];
 			
-		var renderedString = must(templateString)(templateData);
+		var renderedString = musty(templateString)(templateData);
 		
 		done(renderedString);
 	},
@@ -223,7 +223,7 @@ var tests = [
 			}
 		}
 			
-		var renderedString = must(templateString, functions)(templateData);
+		var renderedString = musty(templateString, functions)(templateData);
 //console.log(renderedString);	
 		done(renderedString);
 	},
@@ -238,7 +238,7 @@ var tests = [
 		var userTemplateString = '<b>{{name}}</b>';
 		
 		var functions = {
-			userTemplate: must(userTemplateString)
+			userTemplate: musty(userTemplateString)
 		}
 		
 		var templateData = {
@@ -249,7 +249,7 @@ var tests = [
 			]
 		};
 			
-		var renderedString = must(templateString, functions)(templateData);
+		var renderedString = musty(templateString, functions)(templateData);
 //console.log(renderedString);	
 		done(renderedString);
 	},

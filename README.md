@@ -1,4 +1,4 @@
-# must.js
+# musty.js
 
 Tiny templating library for javascript based on [mustache](http://mustache.github.io/mustache.5.html) syntax
 
@@ -14,27 +14,27 @@ Tiny templating library for javascript based on [mustache](http://mustache.githu
 
 ## Source code
 
-Get the [production code](https://raw.githubusercontent.com/tomaslangkaas/must.js/master/must.js), 
-the [development code](https://raw.githubusercontent.com/tomaslangkaas/must.js/master/src/must.dev.js), 
-or read the [annotated source code](http://www.explainjs.com/explain?src=https%3A%2F%2Fraw.githubusercontent.com%2Ftomaslangkaas%2Fmust.js%2Fmaster%2Fsrc%2Fmust.dev.js)
+Get the [production code](https://raw.githubusercontent.com/tomaslangkaas/musty.js/master/musty.js), 
+the [development code](https://raw.githubusercontent.com/tomaslangkaas/musty.js/master/src/musty.dev.js), 
+or read the [annotated source code](http://www.explainjs.com/explain?src=https%3A%2F%2Fraw.githubusercontent.com%2Ftomaslangkaas%2Fmusty.js%2Fmaster%2Fsrc%2Fmusty.dev.js)
 
 ## Setup
 
-The file `must.js` contains the minified library. When loaded, this file sets up a global variable `must` which contains the whole library in a self-invoking function expression.
+The file `musty.js` contains the minified library. When loaded, this file sets up a global variable `musty` which contains the whole library in a self-invoking function expression.
 
-This may be customized by changing the opening expression `var must= ...` to whatever, such as `whateverNamespaceOrModule.templateCompiler = ...`.
+This may be customized by changing the opening expression `var musty= ...` to whatever, such as `whateverNamespaceOrModule.templateCompiler = ...`.
 
 ## Basic use
 
-The library consists of a single function, `must`. Calling this with a template string returns a compiled template or `false` if compilation fails. The compiled template is a function which accepts a data object and returns a rendered string.
+The library consists of a single function, `musty`. Calling this with a template string returns a compiled template or `false` if compilation fails. The compiled template is a function which accepts a data object and returns a rendered string.
 
 ```javascript
-var compiledTemplate = must(templateString);
+var compiledTemplate = musty(templateString);
 
 var renderedString = compiledTemplate(templateData);
 ```
 
-For custom formatters, the `must` function accepts a second, optional argument, an object with formatting functions.
+For custom formatters, the `musty` function accepts a second, optional argument, an object with formatting functions.
 
 ## Documentation with code examples
 
@@ -53,7 +53,7 @@ var templateData = {
     } 
 };
 
-var renderedString = must(templateString)(templateData);
+var renderedString = musty(templateString)(templateData);
 ```
 
 Console:
@@ -76,7 +76,7 @@ var templateData = {
     boldAndBrave: '<b>bold & "brave"</b>'
 };
 
-var renderedString = must(templateString)(templateData);
+var renderedString = musty(templateString)(templateData);
 ```
 
 Console:
@@ -101,9 +101,9 @@ var templateData2 = {
     showAndTell: false
 };
 
-var renderedString1 = must(templateString)(templateData1);
+var renderedString1 = musty(templateString)(templateData1);
 
-var renderedString2 = must(templateString)(templateData2);
+var renderedString2 = musty(templateString)(templateData2);
 ```
 
 Console:
@@ -130,9 +130,9 @@ var templateData2 = {
     showAndTell: false
 };
 
-var renderedString1 = must(templateString)(templateData1);
+var renderedString1 = musty(templateString)(templateData1);
 
-var renderedString2 = must(templateString)(templateData2);
+var renderedString2 = musty(templateString)(templateData2);
 ```
 
 Console:
@@ -177,7 +177,7 @@ var templateData = {
 	]
 };
 
-var renderedString = must(templateString)(templateData);
+var renderedString = musty(templateString)(templateData);
 	
 console.log(renderedString);
 ```
@@ -216,4 +216,4 @@ Truthy: Infinity
 
 ## Testing
 
-The file `test/testrunner.html` contains client-side tests, [run the tests online](http://htmlpreview.github.io/?https://github.com/tomaslangkaas/must.js/blob/master/test/testrunner.html)
+The file `test/testrunner.html` contains client-side tests, [run the tests online](http://htmlpreview.github.io/?https://github.com/tomaslangkaas/musty.js/blob/master/test/testrunner.html)

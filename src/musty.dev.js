@@ -1,7 +1,7 @@
-//#must.js
+//#musty.js
 
 //A single global variable contains all functionality
-var must = (function(){
+var musty = (function(){
 	
 	//Factory for building regex-based replacer functions
 	function replacer(regex,fn){
