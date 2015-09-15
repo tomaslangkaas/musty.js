@@ -285,6 +285,75 @@ var tests = [
 		var renderedString = musty(templateString)(templateData);	
 		done(renderedString);
 	},
-	'1a2a2b'
+	'1a2a2b',
+	
+	//Test 12
+	
+	'Partial',
+	function(done){
+		var templateString = '{{#users}}'+
+			'{{> userTemplate}} '+
+		'{{/users}}';
+		
+		var userTemplateString = '<b>{{name}} {{#dept}}({{dept}}){{/dept}}</b>';
+		
+		var functions = {
+			userTemplate: musty(userTemplateString)
+		}
+		
+		var templateData = {
+			dept: 'Engineering',
+			users: [
+				{name: 'Jane'},
+				{name: 'Bob '},
+				{name: 'John'}
+			]
+		};
+			
+		var renderedString = musty(templateString, functions)(templateData);
+	
+		done(renderedString);
+	},
+	"<b>Jane (Engineering)</b> <b>Bob  (Engineering)</b> <b>John (Engineering)</b> ",
+	
+	//Test 13
+	
+	'Comments',
+	function(done){
+		var templateString = 'Hello {{! deserves no comment here }}world!';
+			
+		var renderedString = musty(templateString)();
+		
+		done(renderedString);
+	},
+	"Hello world!",
+	
+	//Test 14
+	
+	'Trim tag whitespace',
+	function(done){
+		var templateString = '{{name}} {{  name  }} {{#  name  }}{{name}}{{/  name  }}';
+		
+		var templateData = {
+			name: 'Bob'
+		};
+		
+		var renderedString = musty(templateString)(templateData);
+		
+		done(renderedString);
+	},
+	"Bob Bob Bob",
+	
+	//Test 15
+	
+	'Compilation error',
+	function(done){
+		var templateString = '{{#open section}}';
+		
+		var compiledTemplate = musty(templateString);
+		
+		done(compiledTemplate);
+	},
+	false
 
 ];

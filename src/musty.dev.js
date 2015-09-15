@@ -58,7 +58,7 @@ var musty = (function(){
 	//the current context + any custom functions and parameters to apply
 	function datacall(params){
 		//Split params by delimiter (@)
-		params = params.split('@');
+		params = params.replace(/\s*$/,'').split('@');
 		//Stringify all params
 		for(var l = params.length; l--;){
 			params[l] = '"'+stringify(params[l])+'"';
@@ -70,50 +70,52 @@ var musty = (function(){
 	//Regex to tokenize mustache syntax
 	//Identifies
 	//1. {{{keys in triple braces}}}
-	//2. {{tokens in double braces: #, ^ or /}}
+	//2. {{tokens in double braces: #, ^, /, ! or >}}
 	//3. {{keys in double braces}}
 	//4. characters in need of escaping in javascript source code
-	var parseRegex = /\{\{\{((?:\}{0,2}[^\}])*)\}\}\}|\{\{([#\/\^]?)((?:\}?[^\}])*)\}\}|([\x00-\x1f\"\/\\])/g;
+	var parseRegex = /\{\{\{\s*((?:\}{0,2}[^\}])*)\}\}\}|\{\{([#\/\^\!>]?)\s*((?:\}?[^\}])*)\}\}|([\x00-\x1f\"\/\\])/g;
 
 	//Token handler, takes tokens as input, returns replacement source code
 	function templateParser(m, unescapedKey, sectionToken, escapedKey, specialChar){
 		//If section closing tag
-		return (sectionToken == '\/')?
-			//source code to close any section
-			'"}return s})(d)+"':
-			//else if any of the section opening tokens
-			(sectionToken)?
-				//sections are compiled to immediately invoked
-				//functions
-				'"+(function(d){'+
-				//get the value of the current key
-				'var k='+datacall(escapedKey)+
-				//create a string buffer and an iterator variable
-				',s="",i,'+
-				//call truthyLoop to get parameters:
-				//1: is it a non-empty array?
-				//2: how many times to iterate the section body?
-				'p=t(k);'+
-				((sectionToken == '#')?
-					//if conditional section, setup a for loop
-					'for(i=0;i<p[1];i++){if(p[0])d=([k[i]]).concat(d);':
-					//if inverted conditional section, test if iteration count is 0
-					'if(!p[1]){'
-				)+
-				//capture subsequent syntax in string buffer
-				's+="':
-				(unescapedKey)?
-					//call value of key in current context
-					//without HTML sanitization
-					'"+'+datacall(unescapedKey)+'+"':
-					(escapedKey)?
-						//call value of key in current context
-						//with HTML sanitization
-						'"+h('+datacall(escapedKey)+')+"':
-						(specialChar)?
-							//escape special characters
-							stringifyReplace(specialChar):
-							'';
+		return (sectionToken == '!')? '':
+			(sectionToken == '>')? '"+g(d,[".","'+stringify(escapedKey)+'",0,d])+"':
+				(sectionToken == '\/')?
+					//source code to close any section
+					'"}return s})(d)+"':
+					//else if any of the section opening tokens
+					(sectionToken)?
+						//sections are compiled to immediately invoked
+						//functions
+						'"+(function(d){'+
+						//get the value of the current key
+						'var k='+datacall(escapedKey)+
+						//create a string buffer and an iterator variable
+						',s="",i,'+
+						//call truthyLoop to get parameters:
+						//1: is it a non-empty array?
+						//2: how many times to iterate the section body?
+						'p=t(k);'+
+						((sectionToken == '#')?
+							//if conditional section, setup a for loop
+							'for(i=0;i<p[1];i++){if(p[0])d=([k[i]]).concat(d);':
+							//if inverted conditional section, test if iteration count is 0
+							'if(!p[1]){'
+						)+
+						//capture subsequent syntax in string buffer
+						's+="':
+						(unescapedKey)?
+							//call value of key in current context
+							//without HTML sanitization
+							'"+'+datacall(unescapedKey)+'+"':
+							(escapedKey)?
+								//call value of key in current context
+								//with HTML sanitization
+								'"+h('+datacall(escapedKey)+')+"':
+								(specialChar)?
+									//escape special characters
+									stringifyReplace(specialChar):
+									'';
 	}
 
 	//Parser function for template strings,
