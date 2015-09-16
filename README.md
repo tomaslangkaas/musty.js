@@ -1,4 +1,4 @@
-# musty.js
+!(https://raw.githubusercontent.com/tomaslangkaas/musty.js/master/docs/musty.png)
 
 Tiny templating library for javascript based on [mustache](http://mustache.github.io/mustache.5.html) syntax
 
