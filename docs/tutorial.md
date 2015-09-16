@@ -57,3 +57,19 @@ My friends are:
 This example introduces conditional section tags which start with `{{#tagkey}}` and end it with `{{/tagkey}}`. If the `tagkey` corresponds to a non-empty list or a non-false value in the data, the section content gets processed, otherwise not. If the `tagkey` corresponds to a non-empty list, the section content is processed once for each item in the list.
 
 Note that the current data object (the context) is set to the current value in conditional sections. In the example, the `{{#friends}}` section is processed, since the current data has a non-empty and non-false `friends` property, and the current data object is set to the value of this property. This is an object which has a non-empty `list` property which is an array, thus the `{{#list}}` section gets processed once for each item, where the current data object is set to each item.
+
+### Inverted sections
+
+Content in inverted sections are processed if the tagkey does not exist or if the tagkey refers to a empty or false value. This is useful for implementing if/else logic in templates.
+
+Extending the previous template:
+
+```
+My name is {{name}} and I am {{age}} years old.
+{{#friends}}
+... content to be processed in the case of friends ...
+{{/friends}}
+{{^friends}}
+Sadly, I have no friends at the moment.
+{{/friends}}
+```
