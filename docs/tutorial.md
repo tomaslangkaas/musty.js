@@ -47,4 +47,6 @@ My friends are:
 - James, 35 years old
 - Dora, 42 years old
 ```
-This example introduced conditional section tags where a section starts with `{{#tag key}}` and ends it with `{{/tag key}}`. The `{{#friends}}` and `{{/friends}}` tag indicate that the text and tags within this section is processed if the data contains a `friend` property, which it does in this case.
+This example introduces conditional section tags which start with `{{#tagkey}}` and end it with `{{/tagkey}}`. If the `tagkey` corresponds to a non-empty list or a non-false value in the data, the section content gets processed, otherwise not. If the `tagkey` corresponds to a non-empty list, the section content is processed once for each item in the list.
+
+Also note that the current data object (the context) is set to the current value in conditional sections. In the example, the `{{#friends}}` section is processed, since the current data has a non-empty and non-false `friends` property, and the current data object is set to the value of this property. This is an object which has a non-empty `list` property which is an array, thus the `{{#list}}` section gets processed once for each item, where the current data object is set to each item.
