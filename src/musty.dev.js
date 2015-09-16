@@ -14,26 +14,27 @@ var musty = (function(){
 	//Returns 2 parameters in an array:
 	//- isNonEmptyList: value indicating whether this is an enumerable section
 	//- iterationCount: number of times to repeat the section body
+	
 	function truthyLoop(obj){
 		var i, t = typeof(obj);
 		//If array or object and not null
 		if(t == 'object' && obj){
 			//If array
-			if(obj.splice) return [1, obj.length]
+			if(obj.splice) return obj.length;
 			//Else
 			for(i in obj){
 				//If non-empty object
-				return [0,1];
+				return 1;
 			}
 			//Else, empty object
-			return [];
+			return 0;
 		}
 		//Else
 		return !obj && (t !='number' || isNaN(obj))?
 			//If falsy and not a number
-			[]:
+			0:
 			//Otherwise, truthy
-			[0,1];
+			1;
 	}
 	
 	//Function to sanitize html,
@@ -43,6 +44,8 @@ var musty = (function(){
 			return '&#'+m.charCodeAt(0)+';';
 		}
 	);
+	
+	var rightTrim = replacer(/\s*$/,'');
 	
 	//Function to convert a single character to hex encoding
 	function stringifyReplace(m){
@@ -58,7 +61,7 @@ var musty = (function(){
 	//the current context + any custom functions and parameters to apply
 	function datacall(params){
 		//Split params by delimiter (@)
-		params = params.replace(/\s*$/,'').split('@');
+		params = rightTrim(params).split('@');
 		//Stringify all params
 		for(var l = params.length; l--;){
 			params[l] = '"'+stringify(params[l])+'"';
@@ -79,7 +82,7 @@ var musty = (function(){
 	function templateParser(m, unescapedKey, sectionToken, escapedKey, specialChar){
 		//If section closing tag
 		return (sectionToken == '!')? '':
-			(sectionToken == '>')? '"+g(d,[".","'+stringify(escapedKey)+'",0,d])+"':
+			(sectionToken == '>')? '"+g(d,[".","'+stringify(rightTrim(escapedKey))+'",0,d])+"':
 				(sectionToken == '\/')?
 					//source code to close any section
 					'"}return s})(d)+"':
@@ -98,9 +101,9 @@ var musty = (function(){
 						'p=t(k);'+
 						((sectionToken == '#')?
 							//if conditional section, setup a for loop
-							'for(i=0;i<p[1];i++){if(p[0])d=[k[i]].concat(c);':
+							'for(i=0;i<p;i++){d=[k.splice?k[i]:k].concat(c);':
 							//if inverted conditional section, test if iteration count is 0
-							'if(!p[1]){'
+							'if(!p){'
 						)+
 						//capture subsequent syntax in string buffer
 						's+="':
@@ -144,7 +147,7 @@ var musty = (function(){
 						value, data, i, 
 						l = contextChain.length;
 					for(i = 0; i < l; i++){
-						if(contextChain[i].hasOwnProperty(key)){
+						if(contextChain[i] && contextChain[i].hasOwnProperty(key)){
 							break;
 						}
 					}
@@ -162,12 +165,8 @@ var musty = (function(){
 							contextChain[0]:
 							//else, assign empty string
 							'');
-					return fn?
-						//if custom function, replace two first params with value,
-						//call the function with params and return the return value
-						fn.apply(null, (params.splice(0, 2, value), params)):
-						//otherwise return the value
-						value;
+					if(fn) value = fn.apply(null, (params.splice(0, 2, value), params));
+					return truthyLoop(value)? value: '';
 				}
 				return fn(contextChain || [dataObj], getData, htmlSafe, truthyLoop);
 			}

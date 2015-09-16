@@ -354,6 +354,52 @@ var tests = [
 		
 		done(compiledTemplate);
 	},
-	false
+	false,
+	
+	//Test 16
+	
+	'Trailing whitespace in partials',
+	function(done){
+		var templateString = '{{>partial}}{{>partial  }}';
+		
+		var functions = {
+			partial: musty('a')
+		};
+		
+		var renderedString = musty(templateString, functions)();
+		
+		done(renderedString);
+	},
+	'aa',
+	
+	//Test 17
+	
+	'Current context',
+	function(done){
+		var templateString = 'My name is {{name}} and I am {{age}} years old. '+
+			'{{#friends}}'+
+			'My friends are: '+
+			'{{#list}}'+
+			'\n{{name}}, {{age}} years old'+
+			'{{/list}}\n'+
+			'{{/friends}}';
+		
+		var templateData = {
+			name: 'John',
+			age: 49,
+			friends: {
+				list: [
+					{name: 'Bob', age: 51},
+					{name: 'James', age: 35},
+					{name: 'Dora', age: 42}
+				]
+			}
+		};
+		
+		var renderedString = musty(templateString)(templateData);
+		
+		done(renderedString);	
+	},
+	'My name is John and I am 49 years old. My friends are: \nBob, 51 years old\nJames, 35 years old\nDora, 42 years old\n'
 
 ];
