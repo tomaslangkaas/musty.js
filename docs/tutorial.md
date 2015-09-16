@@ -20,19 +20,23 @@ Templates are handy when listing data. Given the data,
 {
     name: 'John',
     age: 49,
-    friends: [
-        {name: 'Bob', age: 51},
-        {name: 'James', age: 35},
-        {name: 'Dora', age: 42}
-    ]
+    friends: {
+        list: [
+            {name: 'Bob', age: 51},
+            {name: 'James', age: 35},
+            {name: 'Dora', age: 42}
+        ]
+    }
 }
 ```
 and the template,
 ```
 My name is {{name}} and I am {{age}} years old.
-My friends are:
 {{#friends}}
+My friends are:
+{{#list}}
 - {{name}}, {{age}} years old
+{{/list}}
 {{/friends}}
 ```
 this produces:
@@ -43,4 +47,4 @@ My friends are:
 - James, 35 years old
 - Dora, 42 years old
 ```
-This example introduced section tags where a section starts with {{#tag key}} and ends it with {{/tag key}}.
+This example introduced conditional section tags where a section starts with `{{#tag key}}` and ends it with `{{/tag key}}`. The `{{#friends}}` and `{{/friends}}` tag indicate that the text and tags within this section is processed if the data contains a `friend` property, which it does in this case.
