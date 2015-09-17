@@ -13,7 +13,7 @@ var musty = (function(){
 	}
 
 	//Function to determine the iterationCount
-	//key in conditional and inverted sections.
+	//in conditional and inverted sections.
 	//Takes the key value as argument.
 
 	function truthyLoop(obj){
@@ -30,25 +30,28 @@ var musty = (function(){
 			//Else, empty object
 			return 0;
 		}
-		//Else
+		//Else if falsy and not a number
 		return !obj && (t !='number' || isNaN(obj))?
-			//If falsy and not a number
 			0:
-			//Otherwise, truthy
+			//Otherwise
 			1;
 	}
 	
-	//Function to sanitize html,
-	//converts `<>"'&/` to html encoding
+	//Function to sanitize html.
+	//Converts `<>"'&/` to html encoding
+	
 	var htmlSafe = replacer(/[\"\/\\<>&\']/g,
 		function(m){
 			return '&#'+m.charCodeAt(0)+';';
 		}
 	);
 	
+	//Function to trim string for trailing whitespace.
+	
 	var rightTrim = replacer(/\s*$/,'');
 	
-	//Function to convert a single character to hex encoding
+	//Function to convert a single character to hex encoding (\xFF).
+	
 	function stringifyReplace(m){
 		return '\\x'+('0'+m.charCodeAt(0).toString(16)).slice(-2);
 	}
@@ -56,14 +59,16 @@ var musty = (function(){
 	//Function to encode string to a javascript-encoded string,
 	//converts non-printable characters, `"`, `/`, and `\` to
 	//hex-encoded characters
+	
 	var stringify = replacer(/[\x00-\x1f\"\/\\]/g, stringifyReplace);
 
 	//Function to build source code for accessing a given key from
 	//the current context + any custom functions and parameters to apply
+	
 	function datacall(params){
 		//Split params by delimiter (@)
 		params = rightTrim(params).split('@');
-		//Stringify all params
+		//Format all params items as javascript strings
 		for(var l = params.length; l--;){
 			params[l] = '"'+stringify(params[l])+'"';
 		}
@@ -72,11 +77,14 @@ var musty = (function(){
 	}
 	
 	//Regex to tokenize mustache syntax
+	//
 	//Identifies
+	//
 	//1. {{{keys in triple braces}}}
 	//2. {{tokens in double braces: #, ^, /, ! or >}}
 	//3. {{keys in double braces}}
 	//4. characters in need of escaping in javascript source code
+	
 	var parseRegex = /\{\{\{\s*((?:\}{0,2}[^\}])*)\}\}\}|\{\{([#\/\^\!>]?)\s*((?:\}?[^\}])*)\}\}|([\x00-\x1f\"\/\\])/g;
 
 	//Token handler, takes tokens as input, returns replacement source code
