@@ -1,20 +1,21 @@
 //#musty.js
 
 //A single global variable contains all functionality
+
 var musty = (function(){
 	
 	//Factory for building regex-based replacer functions
+	
 	function replacer(regex,fn){
 		return function(str){
 			return (''+str).replace(regex,fn);
 		}
 	}
 
-	//Function to test the key in conditional sections.
-	//Returns 2 parameters in an array:
-	//- isNonEmptyList: value indicating whether this is an enumerable section
-	//- iterationCount: number of times to repeat the section body
-	
+	//Function to determine the iterationCount
+	//key in conditional and inverted sections.
+	//Takes the key value as argument.
+
 	function truthyLoop(obj){
 		var i, t = typeof(obj);
 		//If array or object and not null
